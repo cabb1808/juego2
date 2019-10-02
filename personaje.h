@@ -2,12 +2,14 @@
 #define PERSONAJE_H
 #include <QPainter>
 #include <QGraphicsItem>
+#include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <stdlib.h>
 #include <time.h>
 #include <QObject>
+#include "obstaculos.h"
 
-class personaje : public QObject, public QGraphicsItem
+class personaje : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
@@ -22,11 +24,10 @@ public:
     float get_masa();
     void set_vel(float velx, float vely, float px, float py);
     void actualizar2();
-
+    void stop();
     // Aqui empiezan las funciones para graficarlo
     void setEscala(float s);
     QRectF boundingRect() const; // Monitor dice que es necesario
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); //define como se pintara el objeto
     void actualizar(float vel_Limit);
 
 public slots:

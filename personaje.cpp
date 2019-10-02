@@ -1,6 +1,8 @@
 #include "personaje.h"
 #include <math.h>
 #include <cmath>
+#include <QImage>
+#include <QLabel>
 
 personaje::personaje(float posX_, float posY_, float velX_, float velY_, float masa_, float radio_, float K_, float e_)
 {
@@ -8,7 +10,7 @@ personaje::personaje(float posX_, float posY_, float velX_, float velY_, float m
     PosX = posX_;
     PosY = posY_;
     masa = masa_;
-    Rad = radio_;
+    Rad = radio_+10;
     VelX = velX_;
     VelY = velY_;
     AceX = 0;
@@ -19,6 +21,11 @@ personaje::personaje(float posX_, float posY_, float velX_, float velY_, float m
     V = 0;
     dt = 0.1;
     escala=1;
+    QImage image(":/images/ninja");
+    QImage image2 = image.scaled(50, 50, Qt::KeepAspectRatio);
+    QLabel *plotImg = new QLabel;
+    plotImg->setScaledContents(true);
+    setPixmap(QPixmap(QPixmap::fromImage(image2)));
 }
 
 personaje::~personaje()
@@ -79,6 +86,11 @@ void personaje::actualizar2()                                                  /
     VelY = VelY + (AceY*dt);                              // Vyt+at
 }
 
+void personaje::stop()
+{
+
+}
+
 // Aqui empiezan las funciones para graficarlo
 void personaje::setEscala(float s)
 {
@@ -90,14 +102,10 @@ QRectF personaje::boundingRect() const
     return QRectF(-1*escala*Rad,-1*escala*Rad,2*escala*Rad,2*escala*Rad);
 }
 
-void personaje::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    painter->setBrush(Qt::black);        //asigna el color
-    painter->drawEllipse(boundingRect());    //dibuja una elipse encerrada en la boundingRect
-}
 
 void personaje::actualizar(float limitY)
 {
+
     actualizar2();                  //actualiza las posiciones del cuerpo
     setPos(PosX,(limitY-PosY));  // actualiza posiciones en la interfaz
 }

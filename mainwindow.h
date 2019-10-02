@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QFile>
 #include "personaje.h"
+#include "obstaculos.h"
 #include <QKeyEvent>
 
 namespace Ui {
@@ -34,6 +35,7 @@ private:
     int limitY;                           // longitud en Y del mundo
     void bordercollision(personaje *b);   //detecta colisiones con los bordes del mundo para detenerlo
     void keyPressEvent(QKeyEvent *event);
-    personaje *principal=new personaje(32,150,0,0,10,20,0.08,0.3);              //lista con los cuerpos para mostrarlos.
+    personaje *principal=new personaje(32,150,0,0,20,30,0.08,0);              //lista con los cuerpos para mostrarlos.
+
 };
 #endif // MAINWINDOW_H
