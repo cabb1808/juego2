@@ -18,10 +18,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    obstaculo.cpp \
     personaje.cpp
 
 HEADERS += \
     mainwindow.h \
+    obstaculo.h \
     personaje.h
 
 FORMS += \

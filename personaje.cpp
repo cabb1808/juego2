@@ -108,5 +108,11 @@ void personaje::actualizar(float limitY)
 
     actualizar2();                  //actualiza las posiciones del cuerpo
     setPos(PosX,(limitY-PosY));  // actualiza posiciones en la interfaz
+    QList<QGraphicsItem *> colliding_items =collidingItems();
+    for (int i = 0, n = colliding_items.size();i<n;i++) {
+        if(typeid(*(colliding_items[i])) == typeid(obstaculo)){
+                set_vel(-1*get_e()*get_velX(),get_velY(), 50 ,150);
+        }
+    }
 }
 

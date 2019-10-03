@@ -1,13 +1,13 @@
 #ifndef PERSONAJE_H
 #define PERSONAJE_H
 #include <QPainter>
+#include "obstaculo.h"
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <stdlib.h>
 #include <time.h>
 #include <QObject>
-#include "obstaculos.h"
 
 class personaje : public QObject, public QGraphicsPixmapItem
 {
