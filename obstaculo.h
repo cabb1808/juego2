@@ -12,7 +12,7 @@ class obstaculo : public QObject,public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    explicit obstaculo(QObject *parent = nullptr);
+    explicit obstaculo(int a, int b, QObject *parent = nullptr);
 
 signals:
 

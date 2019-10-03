@@ -7,6 +7,8 @@
 #include <QGraphicsScene>
 #include <stdlib.h>
 #include <time.h>
+#include <QGraphicsTextItem>
+#include <QFont>
 #include <QObject>
 
 class personaje : public QObject, public QGraphicsPixmapItem
@@ -24,7 +26,6 @@ public:
     float get_masa();
     void set_vel(float velx, float vely, float px, float py);
     void actualizar2();
-    void stop();
     // Aqui empiezan las funciones para graficarlo
     void setEscala(float s);
     QRectF boundingRect() const; // Monitor dice que es necesario
@@ -46,7 +47,6 @@ private:
     float e;        //coeficiente de restitucion.
     float V;        //Magnitud del vector velocidad
     float dt;       //delt a de tiempo.
-
     float escala = 1;   //Escala de grafica
 };
 

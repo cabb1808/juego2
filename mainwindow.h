@@ -41,7 +41,9 @@ private:
     void bordercollision(personaje *b);   //detecta colisiones con los bordes del mundo para detenerlo
     void keyPressEvent(QKeyEvent *event);
     personaje *principal=new personaje(32,150,0,0,20,30,0.08,0);              //lista con los cuerpos para mostrarlos.
-    obstaculo *fire,*fire2,*fire3=new obstaculo;
+    obstaculo *fire=new obstaculo(100,40);
+    obstaculo *fire2=new obstaculo(100,40);
+    obstaculo *fire3=new obstaculo(110,40);
 
 };
 #endif // MAINWINDOW_H

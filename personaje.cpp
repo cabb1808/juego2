@@ -26,6 +26,7 @@ personaje::personaje(float posX_, float posY_, float velX_, float velY_, float m
     QLabel *plotImg = new QLabel;
     plotImg->setScaledContents(true);
     setPixmap(QPixmap(QPixmap::fromImage(image2)));
+
 }
 
 personaje::~personaje()
@@ -86,10 +87,6 @@ void personaje::actualizar2()                                                  /
     VelY = VelY + (AceY*dt);                              // Vyt+at
 }
 
-void personaje::stop()
-{
-
-}
 
 // Aqui empiezan las funciones para graficarlo
 void personaje::setEscala(float s)

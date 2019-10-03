@@ -26,10 +26,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(scene);
     ui->centralwidget->adjustSize();
     scene->addRect(scene->sceneRect());
-    fire->setPos(350,750);
-    fire2->setPos(380,750);
-    fire3->setPos(250,750);
+    fire->setPos(350,765);
+    fire2->setPos(500,765);
+    fire3->setPos(170,765);
     scene->addItem(fire);
+    scene->addItem(fire2);
+    scene->addItem(fire3);
     ui->graphicsView->resize(scene->width(),scene->height());
     this->resize(ui->graphicsView->width()+100, ui->graphicsView->height()+100);
     principal->setFlag(QGraphicsItem::ItemIsFocusable);
@@ -84,16 +86,22 @@ void MainWindow::bordercollision(personaje *b)//son los choques con los bordes
     if(b->get_posX()>limitX-b->get_Radio()){//posicion con el borde derecho.
         b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), limitX-b->get_Radio(), b->get_posY());
     }
-    if(b->get_posY()<b->get_Radio()){//choque con el borde superior.
+    if(b->get_posY()<b->get_Radio()){//choque con el borde inferior.
         b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), (b->get_posX()), b->get_Radio());
     }
-    if(b->get_posY()>limitY){//choque con el borde inferior.
+    if(b->get_posY()>limitY){//choque con el borde superior.
         b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY);
     }
 
     if(level==1){
-        if(b->get_posY()>limitY-550){//choque con el borde inferior.
-            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-550);
+        if(b->get_posX()>limitX-10-b->get_Radio()&& b->get_posY()>limitY-680-b->get_Radio() && b->get_posY()< limitY-600-b->get_Radio()){ //teleport
+            b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), 50, 450);
+        }
+        if(b->get_posY()>limitY-515-b->get_Radio() && b->get_posY()<limitY-510-b->get_Radio()){
+            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-515-b->get_Radio());
+        }                                                                                                          //Segunda barra
+        if(b->get_posY()<limitY-435-b->get_Radio() && b->get_posY()>limitY-445-b->get_Radio()){
+            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-435-b->get_Radio());
         }
         //
         if(b->get_posX()>0 && b->get_posX()<3 && b->get_posY()<limitY-680-b->get_Radio() ){//posicion con el borde derecho.
