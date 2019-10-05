@@ -10,6 +10,7 @@
 #include <QGraphicsTextItem>
 #include <QFont>
 #include <QObject>
+#include "enemy.h"
 
 class personaje : public QObject, public QGraphicsPixmapItem
 {

@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     principal->setEscala(5);
     timer=new QTimer(this);                 //crea el timer
+    timer2=new QTimer(this);
     scene=new QGraphicsScene(this);         //crea la scene
     scene->setSceneRect(0,0,limitX,limitY); //establece el tamaño y posicion del scene
 
@@ -32,18 +33,22 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(fire);
     scene->addItem(fire2);
     scene->addItem(fire3);
+    connect(timer2,SIGNAL(timeout()),this,SLOT(spawn()));
+
     ui->graphicsView->resize(scene->width(),scene->height());
     this->resize(ui->graphicsView->width()+100, ui->graphicsView->height()+100);
     principal->setFlag(QGraphicsItem::ItemIsFocusable);
     principal->setFocus();
     connect(timer,SIGNAL(timeout()),this,SLOT(actualizar()));
     timer -> start(20);
+    timer2 -> start(2000);
 
 }
 
 MainWindow::~MainWindow()
 {
     delete timer;
+    delete timer2;
     delete scene;
     delete ui;
 }
@@ -77,6 +82,13 @@ void MainWindow::actualizar()
 
 }
 
+void MainWindow::spawn()
+{
+    enemy *enemigo=new enemy();
+    scene->addItem(enemigo);
+
+}
+
 void MainWindow::bordercollision(personaje *b)//son los choques con los bordes
 {
     if(b->get_posX()<0){
@@ -97,6 +109,16 @@ void MainWindow::bordercollision(personaje *b)//son los choques con los bordes
         if(b->get_posX()>limitX-10-b->get_Radio()&& b->get_posY()>limitY-680-b->get_Radio() && b->get_posY()< limitY-600-b->get_Radio()){ //teleport
             b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), 50, 450);
         }
+        if(b->get_posX()>limitX-10-b->get_Radio()&& b->get_posY()>limitY-380-b->get_Radio() && b->get_posY()< limitY-300-b->get_Radio()){ //teleport
+            b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), 50, 750);
+        }
+        if(b->get_posY()>limitY-215-b->get_Radio() && b->get_posY()<limitY-210-b->get_Radio()){
+            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-215-b->get_Radio());
+        }                                                                                                          //tercera barra
+        if(b->get_posY()<limitY-135-b->get_Radio() && b->get_posY()>limitY-145-b->get_Radio()){
+            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-135-b->get_Radio());
+        }
+        //
         if(b->get_posY()>limitY-515-b->get_Radio() && b->get_posY()<limitY-510-b->get_Radio()){
             b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-515-b->get_Radio());
         }                                                                                                          //Segunda barra

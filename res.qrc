@@ -4,6 +4,7 @@
         <file alias="ninja">KI9zHT.png</file>
         <file alias="fire">20111111131847!Fire.png</file>
         <file alias="ninja2">d6i80ui-0d014bf2-3e72-46bc-9130-0f96974983e2.gif</file>
+        <file alias="arepa">arepa.png</file>
     </qresource>
     <qresource prefix="/sounds"/>
 </RCC>

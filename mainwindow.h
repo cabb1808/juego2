@@ -12,6 +12,8 @@
 #include <QGraphicsPixmapItem>
 #include <QBrush>
 #include <QImage>
+#include "enemy.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -26,13 +28,13 @@ public:
     ~MainWindow();
 private slots:
     void actualizar();
-
-    void on_pushButton_clicked();
+    void spawn();
 
 private:
 
     Ui::MainWindow *ui;
     QTimer *timer;                        // timer para los intervalos de tiempo de visualizacion
+    QTimer *timer2;
     QGraphicsScene *scene;                // scene que muestra los objetos animados
     float dt;                             // intervalo de tiempo de visualizacion
     int limitX;                           // longitud en X del mundo
@@ -44,6 +46,7 @@ private:
     obstaculo *fire=new obstaculo(100,40);
     obstaculo *fire2=new obstaculo(100,40);
     obstaculo *fire3=new obstaculo(110,40);
+    enemy *enemigo=new enemy;
 
 };
 #endif // MAINWINDOW_H

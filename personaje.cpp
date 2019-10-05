@@ -3,7 +3,7 @@
 #include <cmath>
 #include <QImage>
 #include <QLabel>
-
+#include <QGraphicsScene>
 personaje::personaje(float posX_, float posY_, float velX_, float velY_, float masa_, float radio_, float K_, float e_)
 {
     //declaramos el contructor para que entregue valores de todas las variables menos teta
@@ -112,4 +112,5 @@ void personaje::actualizar(float limitY)
         }
     }
 }
+
 
