@@ -13,6 +13,9 @@
 #include <QBrush>
 #include <QImage>
 #include "enemy.h"
+#include <stdlib.h>
+#include <time.h>
+#include <QKeyEvent>
 
 namespace Ui {
 class MainWindow;
@@ -29,12 +32,16 @@ public:
 private slots:
     void actualizar();
     void spawn();
+    void spawn2();
+
 
 private:
+    QImage image,image2,image3,image4;
 
     Ui::MainWindow *ui;
     QTimer *timer;                        // timer para los intervalos de tiempo de visualizacion
     QTimer *timer2;
+    QTimer *timer3;
     QGraphicsScene *scene;                // scene que muestra los objetos animados
     float dt;                             // intervalo de tiempo de visualizacion
     int limitX;                           // longitud en X del mundo
@@ -47,6 +54,6 @@ private:
     obstaculo *fire2=new obstaculo(100,40);
     obstaculo *fire3=new obstaculo(110,40);
     enemy *enemigo=new enemy;
-
+    void nivel();
 };
 #endif // MAINWINDOW_H

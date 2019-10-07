@@ -19,12 +19,9 @@ MainWindow::MainWindow(QWidget *parent)
     principal->setEscala(5);
     timer=new QTimer(this);                 //crea el timer
     timer2=new QTimer(this);
-    scene=new QGraphicsScene(this);         //crea la scene
-    scene->setSceneRect(0,0,limitX,limitY); //establece el tamaño y posicion del scene
+    timer3=new QTimer(this);
 
-    scene->setBackgroundBrush(QBrush(QImage(":/images/fondo")));
-
-    ui->graphicsView->setScene(scene);
+    nivel();
     ui->centralwidget->adjustSize();
     scene->addRect(scene->sceneRect());
     fire->setPos(350,765);
@@ -33,15 +30,21 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(fire);
     scene->addItem(fire2);
     scene->addItem(fire3);
-    connect(timer2,SIGNAL(timeout()),this,SLOT(spawn()));
+
 
     ui->graphicsView->resize(scene->width(),scene->height());
     this->resize(ui->graphicsView->width()+100, ui->graphicsView->height()+100);
     principal->setFlag(QGraphicsItem::ItemIsFocusable);
     principal->setFocus();
+
+    connect(timer2,SIGNAL(timeout()),this,SLOT(spawn2()));
+    connect(timer3,SIGNAL(timeout()),this,SLOT(spawn()));
     connect(timer,SIGNAL(timeout()),this,SLOT(actualizar()));
+
     timer -> start(20);
-    timer2 -> start(2000);
+    timer2 -> start(3000);
+    timer3 -> start(800);
+
 
 }
 
@@ -67,12 +70,32 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
         if (event->key() == Qt::Key_8 /*&& principal->get_posY()<=principal->get_Radio()+80*/){
             principal->set_vel(principal->get_velX(),60,principal->get_posX(), principal->get_posY());
+
         }
         if (event->key() == Qt::Key_Space){
             timer->start(6);
             principal->actualizar(limitY);
             scene->addItem(principal);
         }
+
+}
+
+void MainWindow::nivel()
+{
+    if(level==0){
+        scene=new QGraphicsScene(this);         //crea la scene
+        scene->setSceneRect(0,0,limitX,limitY); //establece el tamaño y posicion del scene
+        ui->graphicsView->setScene(scene);
+
+    }
+    else if(level==1){
+        scene=new QGraphicsScene(this);         //crea la scene
+        scene->setSceneRect(0,0,limitX,limitY); //establece el tamaño y posicion del scene
+
+        scene->setBackgroundBrush(QBrush(QImage(":/images/fondo")));
+
+        ui->graphicsView->setScene(scene);
+    }
 
 }
 void MainWindow::actualizar()
@@ -84,9 +107,15 @@ void MainWindow::actualizar()
 
 void MainWindow::spawn()
 {
-    enemy *enemigo=new enemy();
-    scene->addItem(enemigo);
 
+        enemy *enemigo1=new enemy();
+        scene->addItem(enemigo1);
+
+}
+void MainWindow::spawn2()
+{
+        enemy *enemigo2=new enemy(2);
+        scene->addItem(enemigo2);
 }
 
 void MainWindow::bordercollision(personaje *b)//son los choques con los bordes
@@ -96,10 +125,10 @@ void MainWindow::bordercollision(personaje *b)//son los choques con los bordes
 
     }
     if(b->get_posX()>limitX-b->get_Radio()){//posicion con el borde derecho.
-        b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), limitX-b->get_Radio(), b->get_posY());
+        b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), limitX-25-b->get_Radio(), b->get_posY());
     }
-    if(b->get_posY()<b->get_Radio()){//choque con el borde inferior.
-        b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), (b->get_posX()), b->get_Radio());
+    if(b->get_posY()< b->get_Radio()+15){//choque con el borde inferior.
+        b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), (b->get_posX()), b->get_Radio()+15);
     }
     if(b->get_posY()>limitY){//choque con el borde superior.
         b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY);
@@ -112,58 +141,58 @@ void MainWindow::bordercollision(personaje *b)//son los choques con los bordes
         if(b->get_posX()>limitX-10-b->get_Radio()&& b->get_posY()>limitY-380-b->get_Radio() && b->get_posY()< limitY-300-b->get_Radio()){ //teleport
             b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), 50, 750);
         }
-        if(b->get_posY()>limitY-215-b->get_Radio() && b->get_posY()<limitY-210-b->get_Radio()){
-            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-215-b->get_Radio());
+        if(b->get_posY()>limitY-190-b->get_Radio() && b->get_posY()<limitY-185-b->get_Radio()){
+            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-190-b->get_Radio());
         }                                                                                                          //tercera barra
-        if(b->get_posY()<limitY-135-b->get_Radio() && b->get_posY()>limitY-145-b->get_Radio()){
-            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-135-b->get_Radio());
+        if(b->get_posY()<limitY-110-b->get_Radio() && b->get_posY()>limitY-120-b->get_Radio()){
+            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-110-b->get_Radio());
         }
         //
-        if(b->get_posY()>limitY-515-b->get_Radio() && b->get_posY()<limitY-510-b->get_Radio()){
-            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-515-b->get_Radio());
+        if(b->get_posY()>limitY-490-b->get_Radio() && b->get_posY()<limitY-485-b->get_Radio()){
+            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-490-b->get_Radio());
         }                                                                                                          //Segunda barra
-        if(b->get_posY()<limitY-435-b->get_Radio() && b->get_posY()>limitY-445-b->get_Radio()){
-            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-435-b->get_Radio());
+        if(b->get_posY()<limitY-410-b->get_Radio() && b->get_posY()>limitY-420-b->get_Radio()){
+            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-410-b->get_Radio());
         }
-        //
-        if(b->get_posX()>0 && b->get_posX()<3 && b->get_posY()<limitY-680-b->get_Radio() ){//posicion con el borde derecho.
+        // Primer Piso
+        if(b->get_posX()>0 && b->get_posX()<3 && b->get_posY()<limitY-655-b->get_Radio() ){
             b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), 0, b->get_posY());
         }
-        if(b->get_posX()>190-b->get_Radio() && b->get_posX()<200-b->get_Radio() && b->get_posY()<limitY-680-b->get_Radio() ){//posicion con el borde derecho.
+        if(b->get_posX()>190-b->get_Radio() && b->get_posX()<200-b->get_Radio() && b->get_posY()<limitY-655-b->get_Radio() ){
             b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), 200-b->get_Radio(), b->get_posY());
         }
-        if(b->get_posY()<limitY-680-b->get_Radio() && b->get_posX()>-100 && b->get_posX()<200-b->get_Radio()){//choque con el borde inferior.
-            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(),limitY-680-b->get_Radio());
+        if(b->get_posY()<limitY-655-b->get_Radio() && b->get_posX()>-100 && b->get_posX()<200-b->get_Radio()){
+            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(),limitY-655-b->get_Radio());
          }
-        //
-        if(b->get_posX()>255-b->get_Radio() && b->get_posX()<265-b->get_Radio() && b->get_posY()<limitY-660-b->get_Radio() ){//posicion con el borde derecho.
+
+        if(b->get_posX()>255-b->get_Radio() && b->get_posX()<265-b->get_Radio() && b->get_posY()<limitY-635-b->get_Radio() ){
             b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), 255-b->get_Radio(), b->get_posY());
         }
-        if(b->get_posX()>390-b->get_Radio() && b->get_posX()<395-b->get_Radio() && b->get_posY()<limitY-660-b->get_Radio() ){//posicion con el borde derecho.
+        if(b->get_posX()>390-b->get_Radio() && b->get_posX()<395-b->get_Radio() && b->get_posY()<limitY-635-b->get_Radio() ){
             b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), 395-b->get_Radio(), b->get_posY());
         }
-        if(b->get_posY()<limitY-660-b->get_Radio() && b->get_posX()>255-b->get_Radio() && b->get_posX()<395-b->get_Radio()){//choque con el borde inferior.
-            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(),limitY-660-b->get_Radio());
+        if(b->get_posY()<limitY-635-b->get_Radio() && b->get_posX()>255-b->get_Radio() && b->get_posX()<395-b->get_Radio()){
+            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(),limitY-635-b->get_Radio());
          }
-        //
-        if(b->get_posX()>425-b->get_Radio() && b->get_posX()<430-b->get_Radio() && b->get_posY()<limitY-650-b->get_Radio() ){//posicion con el borde derecho.
+
+        if(b->get_posX()>425-b->get_Radio() && b->get_posX()<430-b->get_Radio() && b->get_posY()<limitY-625-b->get_Radio() ){
             b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), 425-b->get_Radio(), b->get_posY());
         }
-        if(b->get_posX()>540-b->get_Radio() && b->get_posX()<545-b->get_Radio() && b->get_posY()<limitY-650-b->get_Radio() ){//posicion con el borde derecho.
+        if(b->get_posX()>540-b->get_Radio() && b->get_posX()<545-b->get_Radio() && b->get_posY()<limitY-625-b->get_Radio() ){
             b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), 545-b->get_Radio(), b->get_posY());
         }
-        if(b->get_posY()<limitY-650-b->get_Radio() && b->get_posX()>425-b->get_Radio() && b->get_posX()<545-b->get_Radio()){//choque con el borde inferior.
-            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(),limitY-650-b->get_Radio());
+        if(b->get_posY()<limitY-625-b->get_Radio() && b->get_posX()>425-b->get_Radio() && b->get_posX()<545-b->get_Radio()){
+            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(),limitY-625-b->get_Radio());
          }
-        //
-        if(b->get_posX()>595-b->get_Radio() && b->get_posX()<600-b->get_Radio() && b->get_posY()<limitY-600-b->get_Radio() ){//posicion con el borde derecho.
+
+        if(b->get_posX()>595-b->get_Radio() && b->get_posX()<600-b->get_Radio() && b->get_posY()<limitY-575-b->get_Radio() ){
             b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), 595-b->get_Radio(), b->get_posY());
         }
-        if(b->get_posX()>750-b->get_Radio() && b->get_posX()<760-b->get_Radio() && b->get_posY()<limitY-600-b->get_Radio() ){//posicion con el borde derecho.
+        if(b->get_posX()>750-b->get_Radio() && b->get_posX()<760-b->get_Radio() && b->get_posY()<limitY-575-b->get_Radio() ){
             b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), 760-b->get_Radio(), b->get_posY());
         }
-        if(b->get_posY()<limitY-600-b->get_Radio() && b->get_posX()>595-b->get_Radio() && b->get_posX()<760-b->get_Radio()){//choque con el borde inferior.
-            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(),limitY-600-b->get_Radio());
+        if(b->get_posY()<limitY-575-b->get_Radio() && b->get_posX()>595-b->get_Radio() && b->get_posX()<760-b->get_Radio()){
+            b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(),limitY-575-b->get_Radio());
          }
 
     }

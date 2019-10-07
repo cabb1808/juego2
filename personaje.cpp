@@ -22,7 +22,7 @@ personaje::personaje(float posX_, float posY_, float velX_, float velY_, float m
     dt = 0.1;
     escala=1;
     QImage image(":/images/ninja");
-    QImage image2 = image.scaled(50, 50, Qt::KeepAspectRatio);
+    QImage image2 = image.scaled(80, 80, Qt::KeepAspectRatio);
     QLabel *plotImg = new QLabel;
     plotImg->setScaledContents(true);
     setPixmap(QPixmap(QPixmap::fromImage(image2)));
@@ -109,6 +109,12 @@ void personaje::actualizar(float limitY)
     for (int i = 0, n = colliding_items.size();i<n;i++) {
         if(typeid(*(colliding_items[i])) == typeid(obstaculo)){
                 set_vel(-1*get_e()*get_velX(),get_velY(), 50 ,150);
+        }
+        if(typeid(*(colliding_items[i])) == typeid(enemy))
+        {
+            scene()->removeItem(colliding_items[i]);
+            delete colliding_items[i];
+            set_vel(-1*get_e()*get_velX(),get_velY(), 50 ,150);
         }
     }
 }
