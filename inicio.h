@@ -21,7 +21,7 @@ public:
     void sacarVector();
     int buscarUsuario(string a,string b);
     ~inicio();
-
+    int ingreso=0;
 private slots:
     void on_pushButton_clicked();
 

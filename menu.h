@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "inicio.h"
+#include "mainwindow.h"
+
 namespace Ui {
 class Menu;
 }
@@ -14,6 +16,7 @@ class Menu : public QWidget
 public:
     explicit Menu(QWidget *parent = nullptr);
     ~Menu();
+    int ingreso=0;
 
 private slots:
     void on_pushButton_clicked();

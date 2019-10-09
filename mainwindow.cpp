@@ -9,42 +9,45 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    srand(time(NULL));
-    ui->setupUi(this);
 
-    limitX=1000;                   //Asigna el tamaño de la interfaz
-    limitY=800;
+        srand(time(NULL));
+        ui->setupUi(this);
 
-
-    principal->setEscala(5);
-    timer=new QTimer(this);                 //crea el timer
-    timer2=new QTimer(this);
-    timer3=new QTimer(this);
-
-    nivel();
-    ui->centralwidget->adjustSize();
-    scene->addRect(scene->sceneRect());
-    fire->setPos(350,765);
-    fire2->setPos(500,765);
-    fire3->setPos(170,765);
-    scene->addItem(fire);
-    scene->addItem(fire2);
-    scene->addItem(fire3);
+        limitX=1000;                   //Asigna el tamaño de la interfaz
+        limitY=800;
 
 
-    ui->graphicsView->resize(scene->width(),scene->height());
-    this->resize(ui->graphicsView->width()+100, ui->graphicsView->height()+100);
-    principal->setFlag(QGraphicsItem::ItemIsFocusable);
-    principal->setFocus();
+        principal->setEscala(5);
+        timer=new QTimer(this);                 //crea el timer
+        timer2=new QTimer(this);
+        timer3=new QTimer(this);
 
-    connect(timer2,SIGNAL(timeout()),this,SLOT(spawn2()));
-    connect(timer3,SIGNAL(timeout()),this,SLOT(spawn()));
-    connect(timer,SIGNAL(timeout()),this,SLOT(actualizar()));
+        nivel();
+        ui->centralwidget->adjustSize();
+        scene->addRect(scene->sceneRect());
+        fire->setPos(350,765);
+        fire2->setPos(500,765);
+        fire3->setPos(170,765);
+        scene->addItem(fire);
+        scene->addItem(fire2);
+        scene->addItem(fire3);
 
-    timer -> start(20);
-    timer2 -> start(3000);
-    timer3 -> start(800);
 
+        ui->graphicsView->resize(scene->width(),scene->height());
+        this->resize(ui->graphicsView->width()+100, ui->graphicsView->height()+100);
+        principal->setFlag(QGraphicsItem::ItemIsFocusable);
+        principal->setFocus();
+
+        connect(timer2,SIGNAL(timeout()),this,SLOT(spawn2()));
+        connect(timer3,SIGNAL(timeout()),this,SLOT(spawn()));
+        connect(timer,SIGNAL(timeout()),this,SLOT(actualizar()));
+
+
+        timer2 -> start(3000);
+        timer3 -> start(800);
+        timer->start(6);
+        principal->actualizar(limitY);
+        scene->addItem(principal);
 
 }
 
@@ -73,22 +76,23 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
         }
         if (event->key() == Qt::Key_Space){
-            timer->start(6);
-            principal->actualizar(limitY);
-            scene->addItem(principal);
+
         }
 
 }
 
 void MainWindow::nivel()
 {
-    if(level==0){
+    if(level==1){
         scene=new QGraphicsScene(this);         //crea la scene
         scene->setSceneRect(0,0,limitX,limitY); //establece el tamaño y posicion del scene
-        ui->graphicsView->setScene(scene);
 
+        scene->setBackgroundBrush(QBrush(QImage(":/images/fondo")));
+
+        ui->graphicsView->setScene(scene);
     }
-    else if(level==1){
+    else if(level==2){
+
         scene=new QGraphicsScene(this);         //crea la scene
         scene->setSceneRect(0,0,limitX,limitY); //establece el tamaño y posicion del scene
 
@@ -107,15 +111,18 @@ void MainWindow::actualizar()
 
 void MainWindow::spawn()
 {
-
+    if(level==1){
         enemy *enemigo1=new enemy();
         scene->addItem(enemigo1);
 
+    }
 }
 void MainWindow::spawn2()
 {
+    if(level==1){
         enemy *enemigo2=new enemy(2);
         scene->addItem(enemigo2);
+    }
 }
 
 void MainWindow::bordercollision(personaje *b)//son los choques con los bordes
@@ -140,6 +147,10 @@ void MainWindow::bordercollision(personaje *b)//son los choques con los bordes
         }
         if(b->get_posX()>limitX-10-b->get_Radio()&& b->get_posY()>limitY-380-b->get_Radio() && b->get_posY()< limitY-300-b->get_Radio()){ //teleport
             b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), 50, 750);
+        }
+        if(b->get_posX()>limitX-10-b->get_Radio()&& b->get_posY()>limitY-140-b->get_Radio() && b->get_posY()< limitY-60-b->get_Radio()){ //cambio level
+            b->set_vel(-1*b->get_e()*b->get_velX(),b->get_velY(), 50, 150);
+            level=2;
         }
         if(b->get_posY()>limitY-190-b->get_Radio() && b->get_posY()<limitY-185-b->get_Radio()){
             b->set_vel(b->get_velX(),-1*b->get_e()*b->get_velY(), b->get_posX(), limitY-190-b->get_Radio());

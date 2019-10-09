@@ -1,6 +1,7 @@
 #include "inicio.h"
 #include "ui_inicio.h"
 #include <QDebug>
+#include <mainwindow.h>
 inicio::inicio(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::inicio)
@@ -25,6 +26,10 @@ void inicio::sacarVector()
 
 int inicio::buscarUsuario(string a,string b)
 {
+    ofstream archof;
+    archof.open("Usuario.txt");
+    archof<<"carlos"<<'\t'<<"123"<<'&';
+    archof.close();
     ifstream archin;
     archin.open("Usuario.txt");
     string linea,usuario,contrasena;
@@ -32,7 +37,7 @@ int inicio::buscarUsuario(string a,string b)
     while(!archin.eof()){
         i=0;
         getline(archin,linea);
-        for(;linea[i]!=9;i++){
+        for(;linea[i]!='\t';i++){
             usuario+=linea[i];
         }
         i+=1;
@@ -42,13 +47,13 @@ int inicio::buscarUsuario(string a,string b)
                 contrasena+=linea[i];
             }
             if(contrasena==b){
-                return "Bien";
+                return 2;
             }
             else {
-                return "Mal";
+                return 1;
             }
         }
-        else return "Nada";
+        else return 0;
     }
     archin.close();
 }
@@ -62,6 +67,20 @@ void inicio::on_pushButton_clicked()
 {
     string user=  (ui->UserName->text()). toStdString();
     string pass= ( ui->Password->text()). toStdString();
-    qDebug()<<QString::fromStdString(buscarUsuario(user,pass));
-    //ui->label_3->setText(buscarUsuario(user,pass));
+    if(buscarUsuario(user,pass)==0){
+        ui->label_3->setText("Usuario no registrado");
+        ui->UserName->clear();
+        ui->Password->clear();
+    }
+    else if(buscarUsuario(user,pass)==1){
+        ui->label_3->setText("Contraseña incorrecta");
+        ui->Password->clear();
+    }
+    else if(buscarUsuario(user,pass)==2) {
+        ingreso=1;
+        MainWindow *w=new MainWindow;
+        w->show();
+        delete this;
+
+    }
 }

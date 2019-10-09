@@ -1,13 +1,18 @@
 #include "mainwindow.h"
 #include "menu.h"
+#include <QTimer>
 #include <QApplication>
-
+#include <time.h>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    Menu menu;
-    menu.show();
+
+    Menu *menu=new Menu;
+    menu->show();
+    //MainWindow w;
+    //w.show();
+
+
     return a.exec();
 
 }
