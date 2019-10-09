@@ -17,19 +17,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     enemy.cpp \
+    inicio.cpp \
     main.cpp \
     mainwindow.cpp \
+    menu.cpp \
     obstaculo.cpp \
     personaje.cpp
 
 HEADERS += \
     enemy.h \
+    inicio.h \
     mainwindow.h \
+    menu.h \
     obstaculo.h \
     personaje.h
 
 FORMS += \
-    mainwindow.ui
+    inicio.ui \
+    mainwindow.ui \
+    menu.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
