@@ -19,12 +19,15 @@ class inicio : public QWidget
 public:
     explicit inicio(QWidget *parent = nullptr);
     void sacarVector();
-    int buscarUsuario(string a,string b);
+    int buscarUsuario(string a,string b="*****");
+    void registrarUsuario(string a,string b);
     ~inicio();
     int ingreso=0;
 private slots:
     void on_pushButton_clicked();
 
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::inicio *ui;

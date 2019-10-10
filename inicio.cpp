@@ -7,6 +7,7 @@ inicio::inicio(QWidget *parent) :
     ui(new Ui::inicio)
 {
     ui->setupUi(this);
+    ui->graphicsView->setBackgroundBrush(QBrush(QImage(":/images/arepa")));
 }
 
 void inicio::sacarVector()
@@ -26,10 +27,10 @@ void inicio::sacarVector()
 
 int inicio::buscarUsuario(string a,string b)
 {
-    ofstream archof;
-    archof.open("Usuario.txt");
-    archof<<"carlos"<<'\t'<<"123"<<'&';
-    archof.close();
+//    ofstream archof;
+//    archof.open("Usuario.txt");
+//    archof<<"carlos"<<'\t'<<"123"<<'&'<<char(10);
+//    archof.close();
     ifstream archin;
     archin.open("Usuario.txt");
     string linea,usuario,contrasena;
@@ -58,6 +59,18 @@ int inicio::buscarUsuario(string a,string b)
     archin.close();
 }
 
+void inicio::registrarUsuario(string a, string b)
+{
+    ofstream archof;
+    archof.open("Usuario.txt",std::fstream::app);
+    if(archof.is_open()){
+        a=a+'\t'+b+'&';
+        archof<<a<<char(10);
+        qDebug()<<"hola";
+    }
+    archof.close();
+}
+
 inicio::~inicio()
 {
     delete ui;
@@ -83,4 +96,21 @@ void inicio::on_pushButton_clicked()
         delete this;
 
     }
+}
+
+void inicio::on_pushButton_2_clicked()
+{
+    string user=  (ui->UserName->text()). toStdString();
+    string pass= ( ui->Password->text()). toStdString();
+    if(buscarUsuario(user)==1 ){
+        ui->label_3->setText("Usuario ya registrado, ingrese sesion");
+
+    }
+    else if(buscarUsuario(user)==0 && user!=""){
+        registrarUsuario(user,pass);
+        ui->label_3->setText("Registrado Correctamente, ingrese sesion");
+        ingreso=1;
+    }
+    qDebug()<<buscarUsuario(user);
+
 }
