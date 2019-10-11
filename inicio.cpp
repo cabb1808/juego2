@@ -66,7 +66,7 @@ void inicio::registrarUsuario(string a, string b)
     if(archof.is_open()){
         a=a+'\t'+b+'&';
         archof<<a<<char(10);
-        qDebug()<<"hola";
+        //qDebug()<<"hola";
     }
     archof.close();
 }

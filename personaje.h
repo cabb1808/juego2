@@ -16,7 +16,7 @@ class personaje : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    personaje(float posX_, float posY_, float velX_, float velY_, float masa_, float radio_, float K_, float e_);
+    personaje(float posX_, float posY_, float velX_, float velY_, float masa_, float radio_, float K_, float e_, int tipo_=1);
     ~personaje();
     float get_posX();
     float get_posY();
@@ -34,6 +34,8 @@ public:
 
 public slots:
 private:
+
+    int tipo;
     float PosX ;    //Posicion en x
     float PosY;     //posicion en y
     float masa;     //masa del cuerpo

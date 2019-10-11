@@ -15,8 +15,11 @@
 #include "enemy.h"
 #include <stdlib.h>
 #include <time.h>
+#include <vector>
 #include <QKeyEvent>
+#include <QMediaPlayer>
 
+using namespace std;
 namespace Ui {
 class MainWindow;
 }
@@ -42,6 +45,7 @@ private:
     QTimer *timer;                        // timer para los intervalos de tiempo de visualizacion
     QTimer *timer2;
     QTimer *timer3;
+    QTimer *timer4;
     QGraphicsScene *scene;                // scene que muestra los objetos animados
     float dt;                             // intervalo de tiempo de visualizacion
     int limitX;                           // longitud en X del mundo
@@ -50,10 +54,13 @@ private:
     void bordercollision(personaje *b);   //detecta colisiones con los bordes del mundo para detenerlo
     void keyPressEvent(QKeyEvent *event);
     personaje *principal=new personaje(32,150,0,0,20,30,0.08,0);              //lista con los cuerpos para mostrarlos.
-    obstaculo *fire=new obstaculo(100,40);
-    obstaculo *fire2=new obstaculo(100,40);
+    obstaculo *fire=new obstaculo(90,40);
+    obstaculo *fire2=new obstaculo(110,40);
     obstaculo *fire3=new obstaculo(110,40);
-    enemy *enemigo=new enemy;
+    obstaculo *fire4=new obstaculo(80,40);
+    QList<enemy*> enemigos;
+    QList<personaje*> sierras;
     void nivel();
+    QMediaPlayer *salto;
 };
 #endif // MAINWINDOW_H

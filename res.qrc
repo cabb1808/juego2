@@ -7,6 +7,10 @@
         <file alias="arepa">arepa.png</file>
         <file alias="ninja volteado">KI9zHT - copia.png</file>
         <file alias="malo">image.png</file>
+        <file alias="sierra">filecircular-saw-bladepng-wikimedia-commons-saw-blade-png-2000_2000.png</file>
     </qresource>
-    <qresource prefix="/sounds"/>
+    <qresource prefix="/sounds">
+        <file alias="bgsound">y2mate.com - la_cucharita_los_carrangueros_de_raquira_letra_en_la_descripcion_IJT5VXRwX1I.mp3</file>
+        <file alias="salto">salto.mp3</file>
+    </qresource>
 </RCC>

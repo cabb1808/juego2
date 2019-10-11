@@ -20,3 +20,9 @@ void Menu::on_pushButton_clicked()
 {  
     login->show();
 }
+
+void Menu::on_pushButton_2_clicked()
+{
+    MainWindow *w=new MainWindow;
+    w->show();
+}

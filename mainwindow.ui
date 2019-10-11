@@ -14,27 +14,39 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QLCDNumber" name="lcdNumber">
-      <property name="minimumSize">
-       <size>
-        <width>64</width>
-        <height>578</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>64</width>
-        <height>578</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QGraphicsView" name="graphicsView"/>
-    </item>
-   </layout>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>0</y>
+      <width>701</width>
+      <height>591</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_2">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>9</y>
+      <width>64</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>64</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
