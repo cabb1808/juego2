@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 #include <stdlib.h>
 #include <time.h>
+#include <QTimer>
 #include <QGraphicsTextItem>
 #include <QFont>
 #include <QObject>
@@ -16,7 +17,7 @@ class personaje : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    personaje(float posX_, float posY_, float velX_, float velY_, float masa_, float radio_, float K_, float e_, int tipo_=1);
+    personaje(float posX_, float posY_, float velX_, float velY_, float masa_, float radio_, float K_, float e_);
     ~personaje();
     float get_posX();
     float get_posY();
@@ -31,11 +32,13 @@ public:
     void setEscala(float s);
     QRectF boundingRect() const; // Monitor dice que es necesario
     void actualizar(float vel_Limit);
+    void unSpawn();
+
+    int getVida() const;
 
 public slots:
 private:
 
-    int tipo;
     float PosX ;    //Posicion en x
     float PosY;     //posicion en y
     float masa;     //masa del cuerpo
@@ -51,6 +54,7 @@ private:
     float V;        //Magnitud del vector velocidad
     float dt;       //delt a de tiempo.
     float escala = 1;   //Escala de grafica
+    int vida=0;
 };
 
 #endif // PERSONAJE_H

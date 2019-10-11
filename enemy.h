@@ -15,6 +15,7 @@ public:
 
 private:
     int tipo;
+
 signals:
 
 public slots:

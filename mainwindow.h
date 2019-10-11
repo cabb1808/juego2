@@ -18,6 +18,7 @@
 #include <vector>
 #include <QKeyEvent>
 #include <QMediaPlayer>
+#include "bola.h"
 
 using namespace std;
 namespace Ui {
@@ -52,6 +53,8 @@ private:
     int limitY;                           // longitud en Y del mundo
     int level=1;
     void bordercollision(personaje *b);   //detecta colisiones con los bordes del mundo para detenerlo
+    void bordercollision(bola *b);   //detecta colisiones con los bordes del mundo para detenerlo
+
     void keyPressEvent(QKeyEvent *event);
     personaje *principal=new personaje(32,150,0,0,20,30,0.08,0);              //lista con los cuerpos para mostrarlos.
     obstaculo *fire=new obstaculo(90,40);
@@ -59,7 +62,7 @@ private:
     obstaculo *fire3=new obstaculo(110,40);
     obstaculo *fire4=new obstaculo(80,40);
     QList<enemy*> enemigos;
-    QList<personaje*> sierras;
+    QList<bola*> sierras;
     void nivel();
     QMediaPlayer *salto;
 };

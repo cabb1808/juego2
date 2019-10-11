@@ -4,10 +4,10 @@
 #include <QImage>
 #include <QLabel>
 #include <QGraphicsScene>
-personaje::personaje(float posX_, float posY_, float velX_, float velY_, float masa_, float radio_, float K_, float e_,int tipo_)
+#include "bola.h"
+personaje::personaje(float posX_, float posY_, float velX_, float velY_, float masa_, float radio_, float K_, float e_)
 {
     //declaramos el contructor para que entregue valores de todas las variables menos teta
-    tipo=tipo_;
     PosX = posX_;
     PosY = posY_;
     masa = masa_;
@@ -22,20 +22,13 @@ personaje::personaje(float posX_, float posY_, float velX_, float velY_, float m
     V = 0;
     dt = 0.1;
     escala=1;
-    if(tipo==1){
+
         QImage image(":/images/ninja");
         QImage image2 = image.scaled(80, 80, Qt::KeepAspectRatio);
         QLabel *plotImg = new QLabel;
         plotImg->setScaledContents(true);
         setPixmap(QPixmap(QPixmap::fromImage(image2)));
-    }
-    else{
-        QImage image(":/images/sierra");
-        QImage image2 = image.scaled(40, 40, Qt::KeepAspectRatio);
-        QLabel *plotImg = new QLabel;
-        plotImg->setScaledContents(true);
-        setPixmap(QPixmap(QPixmap::fromImage(image2)));
-    }
+
 
 }
 
@@ -115,7 +108,8 @@ void personaje::actualizar(float limitY)
 
     actualizar2();                  //actualiza las posiciones del cuerpo
     setPos(PosX,(limitY-PosY));  // actualiza posiciones en la interfaz
-    if(tipo==1){
+
+
         QList<QGraphicsItem *> colliding_items =collidingItems();
         for (int i = 0, n = colliding_items.size();i<n;i++) {
             if(typeid(*(colliding_items[i])) == typeid(obstaculo)){
@@ -123,18 +117,23 @@ void personaje::actualizar(float limitY)
             }
             if(typeid(*(colliding_items[i])) == typeid(enemy))
             {
-                scene()->removeItem(colliding_items[i]);
+                //scene()->removeItem(colliding_items[i]);
                 delete colliding_items[i];
                 set_vel(get_velX(),get_velY(), 50 ,150);
             }
-            if(typeid(*(colliding_items[i])) == typeid(personaje))
+            else if(typeid(*(colliding_items.at(i))) == typeid(bola))
             {
-                scene()->removeItem(colliding_items[i]);
-                delete colliding_items[i];
-                set_vel(0,0, 100 ,150);
+                //scene()->removeItem(colliding_items[i]);
+                delete colliding_items.at(i);
+                //set_vel(0,0, 100 ,160);
             }
-        }
     }
+}
+
+
+int personaje::getVida() const
+{
+    return vida;
 }
 
 

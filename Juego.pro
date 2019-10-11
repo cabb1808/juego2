@@ -19,6 +19,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    bola.cpp \
     enemy.cpp \
     inicio.cpp \
     main.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
     personaje.cpp
 
 HEADERS += \
+    bola.h \
     enemy.h \
     inicio.h \
     mainwindow.h \
